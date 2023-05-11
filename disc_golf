@@ -1,0 +1,38 @@
+ %{
+
+This function populates a matrix with random values representing disc golf
+scores, calcuating the total score of each player, then calculating the
+lowest score for each round of play as well as the lowest total score of
+all players.
+
+ %}
+
+function [low_holes, low_round] = hw2_dsb(N);
+
+%% initialize matrix with zeroes
+Hole_Scores = zeros(N+1,10);
+
+%% populate matrix with random integers from 2 to 8
+Hole_Scores(1:N,1:9) = round(2+6*rand(N,9));
+
+%% Calculate value of tenth column
+Hole_Scores(1:N,10) = sum(Hole_Scores(1:N,1:9),2);
+
+%% calculate low_holes
+low_holes = min(Hole_Scores(1:N,1:9));
+Hole_Scores(N+1,1:9) = low_holes;  % populate N+1th row with low_holes
+
+%% calculate low_round
+low_round = min(Hole_Scores(1:N,10));
+Hole_Scores(N+1,10) = low_round; % populate lowest round of all players with low_round
+
+end
+%{
+Increasing the number of players decreases the lowest round score as there
+is a larger probability for a player to get the lowest possible score for
+each round, resulting in a low total score.
+As the number of players increases, the variance will decrease as the
+population will become so large that it will be very unlikely for the result to deviate from the expected mean.
+If you increased the number to 4 billion, I believe you would get the
+lowest score possible, in this case, an 18.
+%}
